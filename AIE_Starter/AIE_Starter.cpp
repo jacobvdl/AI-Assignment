@@ -25,6 +25,7 @@
 #define RAYGUI_SUPPORT_ICONS
 #include "raygui.h"
 #include "Pathfinding.h"
+#include <iostream>
 
 using namespace AIForGames;
 
@@ -45,6 +46,16 @@ int main(int argc, char* argv[])
     a->position = glm::vec2(125.0f, 75.0f);
     Node* b = new Node();
     b->position = glm::vec2(250.0f, 75.0f);
+
+    std::vector<std::string> asciiMap;
+    asciiMap.push_back("000000000000");
+    asciiMap.push_back("010111011100");
+    asciiMap.push_back("010101110110");
+    asciiMap.push_back("010100000000");
+    asciiMap.push_back("010111111110");
+    asciiMap.push_back("010000001000");
+    asciiMap.push_back("011111111110");
+    asciiMap.push_back("000000000000");
 
 
     // Main game loop

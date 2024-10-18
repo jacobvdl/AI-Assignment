@@ -149,10 +149,6 @@
   <ItemGroup>
     <ClInclude Include="NodeMap.h" />
     <ClInclude Include="Pathfinding.h" />
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="AIE_Starter.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -25,7 +25,7 @@
 #define RAYGUI_SUPPORT_ICONS
 #include "raygui.h"
 #include "Pathfinding.h"
-#include <iostream>
+#include "NodeMap.h"
 
 using namespace AIForGames;
 
@@ -42,10 +42,10 @@ int main(int argc, char* argv[])
     //--------------------------------------------------------------------------------------
 
 
-    Node* a = new Node();
+    /*Node* a = new Node();
     a->position = glm::vec2(125.0f, 75.0f);
     Node* b = new Node();
-    b->position = glm::vec2(250.0f, 75.0f);
+    b->position = glm::vec2(250.0f, 75.0f);*/
 
     std::vector<std::string> asciiMap;
     asciiMap.push_back("000000000000");
@@ -57,7 +57,8 @@ int main(int argc, char* argv[])
     asciiMap.push_back("011111111110");
     asciiMap.push_back("000000000000");
 
-
+    NodeMap nm;
+    nm.Initialise(asciiMap, 50);
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -68,14 +69,18 @@ int main(int argc, char* argv[])
 
         // Draw
         //----------------------------------------------------------------------------------
-        BeginDrawing();
+        /*BeginDrawing();
 
         ClearBackground(RAYWHITE);
 
         DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
-        EndDrawing();
+        EndDrawing();*/
         //----------------------------------------------------------------------------------
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        nm.Draw();
+        EndDrawing();
     }
 
     // De-Initialization

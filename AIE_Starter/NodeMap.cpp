@@ -77,3 +77,12 @@ void NodeMap::Draw()
 		}
 	}
 }
+
+std::vector<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode)
+{
+	if (!startNode || !endNode)
+		std::cerr << "NULL";
+
+
+	return std::vector<Node*>();
+}

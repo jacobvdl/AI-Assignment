@@ -1,6 +1,7 @@
 #include "NodeMap.h"
 #include <glm/glm.hpp>
 #include <iostream>
+#include <list>
 #include "raylib.h"
 
 void NodeMap::Initialise(std::vector<std::string> asciiMap, int cellSize)
@@ -78,11 +79,36 @@ void NodeMap::Draw()
 	}
 }
 
+bool comparegScore(Node& node1, Node& node2) {
+	if (node1.gScore < node2.gScore)
+		return true;
+}
+
 std::vector<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode)
 {
-	if (!startNode || !endNode)
-		std::cerr << "NULL";
+	if (startNode == nullptr || endNode == nullptr)
+		std::cerr << "startNode or endNode is a nullptr";
+	if (startNode == endNode)
+		return std::vector<Node*>();
 
+	startNode->gScore = 0;
+	startNode->previous = nullptr;
 
-	return std::vector<Node*>();
+	std::list<Node*> openList;
+	std::list<Node*> closedList;
+
+	openList.push_back(startNode);
+
+	while (openList.size() != 0) {
+		openList.sort(comparegScore); // need to test this
+
+		Node* currentNode = openList.front();
+
+		if (currentNode == endNode)
+			break;
+
+		openList.remove(currentNode);
+		closedList.push_back(currentNode);
+
+	}
 }

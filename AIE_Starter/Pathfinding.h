@@ -21,10 +21,13 @@ namespace AIForGames
     struct Node {
         glm::vec2 position;
         std::vector<Edge> connections;
+        int gScore;
         
         Node();
         Node(float x, float y);
         
+
+        Node* previous = nullptr;
 
         void ConnectTo(Node* other, float cost);
 

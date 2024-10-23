@@ -89,47 +89,34 @@ bool comparegScore(Node* node1, Node* node2) {
 
 std::list<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode) //
 {
-	// if startNode is null OR endNode is null
-	if (startNode == nullptr || endNode == nullptr) 
-		// Raise Error
-		throw; 
-	// if startNode == endNode
-	if (startNode == endNode) 
-		// return empty Path
-		return std::list<Node*>();
+	if (startNode == nullptr || endNode == nullptr) //
+		throw; //
+	if (startNode == endNode) //
+		return std::list<Node*>(); //
+	startNode->gScore = 0; //
+	startNode->previous = nullptr; //
 
-	// Set startNode.gScore to 0
-	startNode->gScore = 0;
-	// Set startNode.previous to null
-	startNode->previous = nullptr;
+	std::list<Node*> openList; //
+	std::list<Node*> closedList; //
 
-	// Let openList be a List of Nodes
-	std::list<Node*> openList; 
-	// Let closedList be a List of Nodes
-	std::list<Node*> closedList; 
+	openList.push_back(startNode); //
 	
-	// Add startNode to openList
-	openList.push_back(startNode);
-	
-	// While openList is not empty
-	while (openList.size() != 0) {
-		// Sort openList by Node.gScore
+
+	while (openList.size() != 0) { //
 		openList.sort(comparegScore); // need to test this
-		// Let currentNode = first item in openList
-		Node* currentNode = openList.front();
+		//std::cout << "AAAA\n";
+		Node* currentNode = openList.front(); //
 
-		// If currentNode is endNode
-		if (currentNode == endNode) 
-			// Exit While Loop
-			break;
+		if (currentNode == endNode)  //
+			break; //
 		
-		// Remove currentNode from openList
-		openList.remove(currentNode);
-		// Add currentNode to closedList
-		closedList.push_back(currentNode);
+		
+		openList.remove(currentNode); //
+		closedList.push_back(currentNode); //
 
 
-		// For all connections c in currentNode
+		//Edge* c = &currentNode->connections.front(); //
+		std::cout << "CONNECTIONS: " << currentNode->connections.size() << std::endl;
 		for (Edge& c : currentNode->connections) {
 			//If c.target not in closedList
 			bool isClosed = false;

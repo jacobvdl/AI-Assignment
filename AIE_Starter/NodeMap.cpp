@@ -1,7 +1,9 @@
 #include "NodeMap.h"
 #include <glm/glm.hpp>
 #include <iostream>
+#include <algorithm>
 #include <list>
+#include <vector>
 #include "raylib.h"
 
 void NodeMap::Initialise(std::vector<std::string> asciiMap, int cellSize)
@@ -83,20 +85,19 @@ void NodeMap::Draw()
 }
 
 bool comparegScore(Node* node1, Node* node2) {
-	if (node1->gScore < node2->gScore)
-		return true;
+	return node1->gScore < node2->gScore;
 }
 
-std::list<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode) //
+std::vector<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode) //
 {
 	// if startNode is null OR endNode is null
 	if (startNode == nullptr || endNode == nullptr) 
 		// Raise Error
-		throw; 
+		return std::vector<Node*>();
 	// if startNode == endNode
 	if (startNode == endNode) 
 		// return empty Path
-		return std::list<Node*>();
+		return std::vector<Node*>();
 
 	// Set startNode.gScore to 0
 	startNode->gScore = 0;
@@ -104,9 +105,9 @@ std::list<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode) //
 	startNode->previous = nullptr;
 
 	// Let openList be a List of Nodes
-	std::list<Node*> openList; 
+	std::vector<Node*> openList; 
 	// Let closedList be a List of Nodes
-	std::list<Node*> closedList; 
+	std::vector<Node*> closedList; 
 	
 	// Add startNode to openList
 	openList.push_back(startNode);
@@ -114,17 +115,31 @@ std::list<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode) //
 	// While openList is not empty
 	while (openList.size() != 0) {
 		// Sort openList by Node.gScore
-		openList.sort(comparegScore); // need to test this
+
+
+
+		//std::sort(openList.begin(), openList.end(), [](Node* a, Node* b)
+		//	{
+		//		return a->gScore < b->gScore;
+		//	}
+		//); // need to test this
+
+		std::sort(openList.begin(), openList.end(), comparegScore); // need to test this
+
+
+
+
+
 		// Let currentNode = first item in openList
 		Node* currentNode = openList.front();
 
 		// If currentNode is endNode
-		if (currentNode == endNode) 
+		if (currentNode == endNode)
 			// Exit While Loop
 			break;
-		
+
 		// Remove currentNode from openList
-		openList.remove(currentNode);
+		openList.erase(openList.begin());
 		// Add currentNode to closedList
 		closedList.push_back(currentNode);
 
@@ -132,24 +147,26 @@ std::list<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode) //
 		// For all connections c in currentNode
 		for (Edge& c : currentNode->connections) {
 			//If c.target not in closedList
-			bool isClosed = false;
+			/*bool isClosed = false;
 			for (Node* closedNode : closedList) {
 				if (c.target == closedNode)
 					isClosed = true;
-			}
+			}*/
 
-			if (!isClosed) {
+			if (std::find(closedList.begin(), closedList.end(), c.target) == closedList.end())
+			{
 				//Let gScore = currentNode.gScore + c.cost
-				int gScore = currentNode->gScore + c.cost;
+				float gScore = currentNode->gScore + c.cost;
 
-				//If c.target not in openList
-				bool isOpen = false;
-				for (Node* openedNode : openList) {
-					if (c.target == openedNode)
-						isOpen = true;
-				}
-				
-				if (!isOpen) {
+				////If c.target not in openList
+				//bool isOpen = false;
+				//for (Node* openedNode : openList) {
+				//	if (c.target == openedNode)
+				//		isOpen = true;
+				//}
+
+				if (std::find(openList.begin(), openList.end(), c.target) == openList.end())
+				{
 					//Set c.target.gScore = gScore
 					c.target->gScore = gScore;
 					//Set c.target.previous = currentNode
@@ -166,111 +183,32 @@ std::list<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode) //
 				}
 			}
 
-				
+
 		}
-		//for (int i = 0; i <= currentNode->connections.size(); i++) {
-		//	std::cout << "AAAA\n";
-		//	
-		//	Node* checkingNode;
-		//	bool isInClosed = true;
-		//	if (closedList.size() != 0) {
-		//		checkingNode = closedList.front();
-		//		for (int a = 0; a < closedList.size(); a++) {
-		//			for (int b = 0; b < currentNode->connections.size(); b++) {
-		//				if (currentNode != c->target) {
-		//					isInClosed = false;
-		//					std::cout << "ITS NOT CLOSED\n";
-		//					break;
-		//				}
-		//				if (b != currentNode->connections.size())
-		//					c = std::next(c);
-		//			}
-		//			if (a != closedList.size())
-		//				checkingNode = std::next(checkingNode);
-		//		}
-		//	}
-		//	
-
-		//	if (isInClosed == false) {
-		//		std::cout << "IS THIS RUNNING\n";
-		//		int gScore = currentNode->gScore + c->cost;
-		//		bool isInOpen = false;
-		//		if (openList.size() != 0) {
-		//			checkingNode = openList.front();
-		//			for (int a = 0; a < openList.size(); a++) {
-		//				if (checkingNode == c->target) {
-		//					isInOpen = true;
-		//					std::cout << "IS IN OPEN\n";
-		//				}
-		//				if (a != openList.size())
-		//					checkingNode = std::next(checkingNode);
-		//			}
-		//		}
-
-		//		if (!isInOpen) {
-		//			std::cout << "THIS SHOULD RUN\n";
-		//			c->target->gScore = gScore;
-		//			c->target->previous = currentNode;
-		//			openList.push_back(c->target);
-		//		}
-		//		else if (currentNode->gScore < c->target->gScore) {
-		//			std::cout << "TEST\n";
-		//			c->target->gScore = gScore;
-		//			c->target->previous = currentNode;
-		//		}
-
-		//	}
-		//	
-
-		//	//if (i != currentNode->connections.size())
-		//		//checkingNode = std::next(checkingNode);
-		//}
-
-
-		// Create Path in reverse from endNode to startNode
-		//Let Path be a list of Nodes
-		std::list<Node*> Path;
-		//Let currentNode = endNode
-		currentNode = endNode;
-
-		//While currentNode is not null
-		while (currentNode != nullptr) {
-			//Add currentNode to beginning of Path
-			Path.push_front(currentNode);
-			//Set currentNode = currentNode.previous
-			currentNode = currentNode->previous;
-		}
-		
-		// DEBUGGING
-		for (Node* debugnode : Path) {
-			std::cout << "NODE IN PATH\n";
-		}
-
-		// Return the path for navigation between startNode/endNode
-		//Return Path
-		return Path;
-
-
-
-		/*std::list<Node*> path;
-		currentNode = endNode;
-		std::cout << "test\n";
-		if (currentNode == nullptr)
-			std::cout << "CURRENT NULL\n";
-		while (currentNode != nullptr) {
-			std::cout << "test\n";
-			path.push_front(currentNode);
-			std::cout << "test\n";
-			std::cout << "CURRENT: " << currentNode->gScore;
-			if (currentNode->previous == nullptr)
-				break;
-			
-			std::cout << " PREVIOUS: " << currentNode->previous->gScore << std::endl;
-			currentNode = currentNode->previous;
-			std::cout << "WORKED\n";
-		}
-
-		return path;*/
-		
 	}
+
+	// Create Path in reverse from endNode to startNode
+	//Let Path be a list of Nodes
+	std::vector<Node*> Path;
+	//Let currentNode = endNode
+	Node* currentNode = endNode;
+
+	//While currentNode is not null
+	while (currentNode != nullptr) {
+		//Add currentNode to beginning of Path
+		Path.insert(Path.begin(), currentNode);
+		//Set currentNode = currentNode.previous
+		currentNode = currentNode->previous;
+		std::cout << "not nullptr\n";
+	}
+		
+	// DEBUGGING
+	//for (Node* debugnode : Path) {
+	//	std::cout << "NODE IN PATH\n";
+	//}
+
+	// Return the path for navigation between startNode/endNode
+	//Return Path
+	return Path;
+	
 }

@@ -21,25 +21,26 @@
 
 #include "raylib.h"
 
-#define RAYGUI_IMPLEMENTATION
-#define RAYGUI_SUPPORT_ICONS
-#include "raygui.h"
+//#define RAYGUI_IMPLEMENTATION
+//#define RAYGUI_SUPPORT_ICONS
+//#include "raygui.h"
 #include "Pathfinding.h"
 #include <list>
+#include <vector>
 #include "NodeMap.h"
 
 using namespace AIForGames;
 void DrawPath(std::list<Node*> path, Color lineColor) {
-    Node* current = path.front();
-    for (int i = 0; i > path.size(); i++) {
-        if (current != nullptr || current->previous != nullptr) {
-            DrawLine(current->position.x, current->position.y, current->previous->position.x, current->previous->position.y, lineColor);
-            std::cout << "DREW LINE\n";
-        }
-        else
-            std::cout << "NULL\n";
-        std::next(current);
-    }
+    //Node* current = path.front();
+    //for (int i = 0; i > path.size(); i++) {
+    //    if (current != nullptr || current->previous != nullptr) {
+    //        DrawLine(current->position.x, current->position.y, current->previous->position.x, current->previous->position.y, lineColor);
+    //        std::cout << "DREW LINE\n";
+    //    }
+    //    else
+    //        std::cout << "NULL\n";
+    //    std::next(current);
+    //}
 }
 
 int main(int argc, char* argv[])
@@ -75,7 +76,7 @@ int main(int argc, char* argv[])
 
     Node* start = nm.GetNode(1, 1);
     Node* end = nm.GetNode(10, 2);
-    std::list<Node*> nmPath = nm.DijkstrasSearch(start, end);
+    std::vector<Node*> nmPath = nm.DijkstrasSearch(start, end);
     Color lineColor = { 255,255,255,255 };
 
     // Main game loop
@@ -99,7 +100,7 @@ int main(int argc, char* argv[])
         BeginDrawing();
         ClearBackground(BLACK);
         nm.Draw();
-        DrawPath(nmPath, lineColor);
+        //DrawPath(nmPath, lineColor);
         EndDrawing();
     }
 

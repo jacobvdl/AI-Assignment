@@ -35,20 +35,30 @@ void NodeMap::Initialise(std::vector<std::string> asciiMap, int cellSize)
 			if (node) {
 				Node* nodeWest = x == 0 ? nullptr : GetNode(x - 1, y);
 				if(nodeWest) {
-					std::cout << "connection\n";
+					//std::cout << "connection\n";
 					node->ConnectTo(nodeWest, 1);
 					nodeWest->ConnectTo(node, 1);
 				}
 
 				Node* nodeSouth = y == 0 ? nullptr : GetNode(x, y - 1);
 				if (nodeSouth) {
-					std::cout << "connection\n";
+					//std::cout << "connection\n";
 					node->ConnectTo(nodeSouth, 1);
 					nodeSouth->ConnectTo(node, 1);
 				}
 			}
 		}
 	}
+}
+
+Node* NodeMap::GetClosestNode(glm::vec2 worldPos)
+{
+	int i = (int)(worldPos.x / m_cellSize);
+	if (i < 0 || i >= m_width) return nullptr;
+	int j = (int)(worldPos.y / m_cellSize);
+	if (j < 0 || j >= m_height) return nullptr;
+
+	return GetNode(i, j);
 }
 
 void NodeMap::Draw()
@@ -61,9 +71,9 @@ void NodeMap::Draw()
 
 	Color lineColor;
 	lineColor.a = 255;
-	lineColor.r = 0;
+	lineColor.r = 255;
 	lineColor.g = 255;
-	lineColor.b = 0;
+	lineColor.b = 255;
 
 	for (int y = 0; y < m_height; y++) {
 		for (int x = 0; x < m_width; x++) {
@@ -199,13 +209,12 @@ std::vector<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode) //
 		Path.insert(Path.begin(), currentNode);
 		//Set currentNode = currentNode.previous
 		currentNode = currentNode->previous;
-		std::cout << "not nullptr\n";
 	}
 		
 	// DEBUGGING
-	//for (Node* debugnode : Path) {
-	//	std::cout << "NODE IN PATH\n";
-	//}
+	/*for (Node* debugnode : Path) {
+		std::cout << "NODE IN PATH\n";
+	}*/
 
 	// Return the path for navigation between startNode/endNode
 	//Return Path

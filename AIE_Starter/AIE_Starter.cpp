@@ -30,17 +30,13 @@
 #include "NodeMap.h"
 
 using namespace AIForGames;
-void DrawPath(std::list<Node*> path, Color lineColor) {
-    //Node* current = path.front();
-    //for (int i = 0; i > path.size(); i++) {
-    //    if (current != nullptr || current->previous != nullptr) {
-    //        DrawLine(current->position.x, current->position.y, current->previous->position.x, current->previous->position.y, lineColor);
-    //        std::cout << "DREW LINE\n";
-    //    }
-    //    else
-    //        std::cout << "NULL\n";
-    //    std::next(current);
-    //}
+void DrawPath(std::vector<Node*> path, Color lineColor) {
+
+    for (Node* current : path) {
+        if (current != nullptr && current->previous != nullptr) {
+            DrawLine(current->position.x, current->position.y, current->previous->position.x, current->previous->position.y, lineColor);
+        }
+    }
 }
 
 int main(int argc, char* argv[])
@@ -51,6 +47,8 @@ int main(int argc, char* argv[])
     int screenHeight = 450;
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+
+    
 
     SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
@@ -77,7 +75,7 @@ int main(int argc, char* argv[])
     Node* start = nm.GetNode(1, 1);
     Node* end = nm.GetNode(10, 2);
     std::vector<Node*> nmPath = nm.DijkstrasSearch(start, end);
-    Color lineColor = { 255,255,255,255 };
+    Color lineColor = { 0,255,0,255 };
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -100,8 +98,15 @@ int main(int argc, char* argv[])
         BeginDrawing();
         ClearBackground(BLACK);
         nm.Draw();
-        //DrawPath(nmPath, lineColor);
+        DrawPath(nmPath, lineColor);
+        //DrawFPS(20, 20);
         EndDrawing();
+
+        if (IsMouseButtonPressed(0)) {
+            Vector2 mousePos = GetMousePosition();
+            start = nm.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
+            nmPath = nm.DijkstrasSearch(start, end);
+        }
     }
 
     // De-Initialization

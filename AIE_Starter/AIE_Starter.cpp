@@ -28,6 +28,7 @@
 #include <list>
 #include <vector>
 #include "NodeMap.h"
+#include "PathAgent.h"
 
 using namespace AIForGames;
 void DrawPath(std::vector<Node*> path, Color lineColor) {
@@ -77,6 +78,11 @@ int main(int argc, char* argv[])
     std::vector<Node*> nmPath = nm.DijkstrasSearch(start, end);
     Color lineColor = { 0,255,0,255 };
 
+    PathAgent agent;
+    agent.SetNode(start);
+    agent.SetSpeed(64);  
+    agent.SetNodeMap(&nm);
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -100,13 +106,17 @@ int main(int argc, char* argv[])
         nm.Draw();
         DrawPath(nmPath, lineColor);
         //DrawFPS(20, 20);
+        agent.Draw();
         EndDrawing();
 
         if (IsMouseButtonPressed(0)) {
             Vector2 mousePos = GetMousePosition();
-            start = nm.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
+            end = nm.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
+            start = agent.GetNode();
             nmPath = nm.DijkstrasSearch(start, end);
+            agent.GoToNode(end);
         }
+        agent.Update(GetFrameTime());
     }
 
     // De-Initialization

@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
 
     Node* start = nm.GetNode(1, 1);
     Node* end = nm.GetNode(10, 2);
-    std::vector<Node*> nmPath = nm.DijkstrasSearch(start, end);
+    std::vector<Node*> nmPath = nm.AStarSearch(start, end);
     Color lineColor = { 0,255,0,255 };
 
     PathAgent agent;
@@ -113,7 +113,7 @@ int main(int argc, char* argv[])
             Vector2 mousePos = GetMousePosition();
             end = nm.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
             start = agent.GetNode();
-            nmPath = nm.DijkstrasSearch(start, end);
+            nmPath = nm.AStarSearch(start, end);
             agent.GoToNode(end);
         }
         agent.Update(GetFrameTime());

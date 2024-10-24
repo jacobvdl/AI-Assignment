@@ -221,3 +221,126 @@ std::vector<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode) //
 	return Path;
 	
 }
+
+bool comparefScore(Node* node1, Node* node2) {
+	return node1->fScore < node2->fScore;
+}
+
+float Heuristic(Node* target, Node* endNode) {
+
+	float dist = (target->position.x + target->position.y) - (endNode->position.x + endNode->position.y);
+
+	if (dist < 0) {
+		dist *= -1; // make the number positive
+	}
+	return dist;
+}
+
+std::vector<Node*> NodeMap::AStarSearch(Node* startNode, Node* endNode)
+{
+	return std::vector<Node*>();
+
+	// if startNode is null OR endNode is null
+	if (startNode == nullptr || endNode == nullptr)
+		// Raise Error
+		return std::vector<Node*>();
+	// if startNode == endNode
+	if (startNode == endNode)
+		// return empty Path
+		return std::vector<Node*>();
+
+	// Initialise the starting node
+	//Set startNode.gScore to 0
+	startNode->gScore = 0;
+	//Set startNode.parent to null
+	startNode->parent = nullptr;
+
+	// Create our temporary lists for storing nodes we’re visiting/visited
+	//Let openList be a List of Nodes
+	std::vector<Node*> openList;
+	//Let closedList be a List of Nodes
+	std::vector<Node*> closedList;
+
+	//Add startNode to openList
+	openList.push_back(startNode);
+
+	//While openList is not empty
+	while (openList.size() != 0) {
+		//Sort openList by Node.fScore
+		std::sort(openList.begin(), openList.end(), comparefScore);
+
+		//Let currentNode = first item in openList
+		Node* currentNode = openList.front();
+
+		// If we visit the endNode, then we can exit early.
+		// Sorting the openList guarantees the shortest path is found,
+		// given no negative costs (a prerequisite of the algorithm).
+		//If currentNode is endNode
+		if (currentNode == endNode)
+			//Exit While Loop
+			break;
+
+		//Remove currentNode from openList
+		openList.erase(openList.begin());
+		//Add currentNode to closedList
+		closedList.push_back(currentNode);
+
+		//For all connections c in currentNode
+		for (Edge& c : currentNode->connections) {
+			//If c.target not in closedList
+			if (std::find(closedList.begin(), closedList.end(), c.target) == closedList.end()) {
+				//Let gScore = currentNode.gScore + c.cost
+				float gScore = currentNode->gScore + c.cost;
+				//Let hScore = Heuristic(c.target, endNode)
+				float hScore = Heuristic(c.target, endNode);
+				//Let fScore = gScore + hScore
+				float fScore = gScore + hScore;
+
+				// Have not yet visited the node.
+				// So calculate the Score and update its parent.
+				// Also add it to the openList for processing.
+				//If c.target not in openList
+				if (std::find(openList.begin(), openList.end(), c.target) == openList.end()) {
+					//Let c.target.gScore = gScore
+					c.target->gScore = gScore;
+					//Let c.target.fScore = fScore
+					c.target->fScore = fScore;
+					//Let c.target.parent = currentNode
+					c.target->parent = currentNode;
+					//Add c.target to openList
+					openList.push_back(c.target);
+				}
+
+				// Node is already in the openList with a valid Score.
+				// So compare the calculated Score with the existing
+				// to find the shorter path.
+				//Else if (fScore < c.target.fScore)
+				else if (fScore < c.target->fScore){
+					//Let c.target.gScore = gScore
+					c.target->gScore = gScore;
+					//Let c.target.fScore = fScore
+					c.target->fScore = fScore;
+					//Let c.target.parent = currentNode
+					c.target->parent = currentNode;
+				}
+			}
+		}
+	}
+	// Create Path in reverse from endNode to startNode
+	//Let Path be a list of Nodes
+	std::vector<Node*> Path;
+	//Let currentNode = endNode
+	Node* currentNode = endNode;
+
+	//While currentNode is not null
+	while (currentNode != nullptr) {
+		//Add currentNode to beginning of Path
+		Path.insert(Path.begin(), currentNode);
+		//Let currentNode = currentNode.parent
+		currentNode = currentNode->parent;
+	}
+
+	// Return the path for navigation between startNode/endNode
+	//Return Path
+	return Path;
+}

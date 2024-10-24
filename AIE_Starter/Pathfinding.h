@@ -22,11 +22,13 @@ namespace AIForGames
         glm::vec2 position;
         std::vector<Edge> connections;
         float gScore;
+        float hScore;
+        float fScore;
         
         Node();
         Node(float x, float y);
         
-
+        Node* parent = nullptr;
         Node* previous = nullptr;
 
         void ConnectTo(Node* other, float cost);

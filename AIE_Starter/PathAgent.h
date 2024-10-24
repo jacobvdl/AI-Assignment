@@ -8,7 +8,7 @@ class PathAgent
 private:
 	glm::vec2 position;
 
-	std::vector<Node*> path;
+	
 	int currentIndex;
 	Node* currentNode;
 	NodeMap* nm;
@@ -16,6 +16,7 @@ private:
 	float speed;
 
 public:
+	std::vector<Node*> path;
 	void Update(float dt);
 	void GoToNode(Node* node);
 	void Draw();

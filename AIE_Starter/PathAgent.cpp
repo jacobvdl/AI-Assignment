@@ -64,7 +64,7 @@ void PathAgent::Update(float dt)
 	//position += speed * dt * moveAxis;
 	//position = { (position.x) * speed * dt, (position.y) * speed * dt };
 	//position = position * moveAxis;
-	std::cout << "DIST: " << dist << std::endl;
+	//std::cout << "DIST: " << dist << std::endl;
 	//Otherwise, we’ve overshot the node.Add one to currentIndex.If we’ve reached the end of our path, snap to the final node and empty the path so future updates do nothing.
 	//If we have a next node, then distance with the subtracted speed* deltaTime tells us how far we’ve overshot the node if we invert it.Find the unit vector from our previous node to the new next node, and move along this vector by the overshoot distance from the previous next node.
 }

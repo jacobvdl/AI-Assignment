@@ -227,7 +227,13 @@ bool comparefScore(Node* node1, Node* node2) {
 }
 
 float Heuristic(Node* target, Node* endNode) {
-	 
+
+	float dist = (target->position.x + target->position.y) - (endNode->position.x + endNode->position.y);
+
+	if (dist < 0) {
+		dist *= -1; // make the number positive
+	}
+	return dist;
 }
 
 std::vector<Node*> NodeMap::AStarSearch(Node* startNode, Node* endNode)

@@ -18,6 +18,7 @@ public:
 	Node* GetClosestNode(glm::vec2 worldPos);
 	void Draw();
 	std::vector<Node*> DijkstrasSearch(Node* startNode, Node* endNode);
+	std::vector<Node*> AStarSearch(Node* startNode, Node* endNode);
 
 };
 

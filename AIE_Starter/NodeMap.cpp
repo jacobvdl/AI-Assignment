@@ -61,6 +61,17 @@ Node* NodeMap::GetClosestNode(glm::vec2 worldPos)
 	return GetNode(i, j);
 }
 
+Node* NodeMap::GetRandomNode()
+{
+	Node* node = nullptr;
+	while (node == nullptr) {
+		int x = rand() % m_width;
+		int y = rand() % m_height;
+		node = GetNode(x, y);
+	}
+	return node;
+}
+
 void NodeMap::Draw()
 {
 	Color cellColor;

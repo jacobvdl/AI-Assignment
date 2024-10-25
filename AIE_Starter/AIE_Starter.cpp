@@ -31,6 +31,8 @@
 #include "PathAgent.h"
 #include "Agent.h"
 #include "GoToPointBehaviour.h"
+#include "WanderBehaviour.h"
+#include "FollowBehaviour.h"
 
 using namespace AIForGames;
 void DrawPath(std::vector<Node*> path, Color lineColor) {
@@ -87,6 +89,16 @@ int main(int argc, char* argv[])
 
     Agent agent(&nm, new GoToPointBehaviour());
     agent.SetNode(start);
+    agent.SetSpeed(64);
+
+    Agent agent2(&nm, new WanderBehaviour());
+    agent2.SetNode(nm.GetRandomNode());
+    agent2.SetSpeed(64);
+
+    Agent agent3(&nm, new FollowBehaviour());
+    agent3.SetNode(nm.GetRandomNode());
+    agent3.SetSpeed(32);
+    agent3.SetTarget(&agent);
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -112,6 +124,15 @@ int main(int argc, char* argv[])
         //DrawPath(pagent.path, lineColor);
         //DrawFPS(20, 20);
         //pagent.Draw();
+        agent.Update(GetFrameTime());
+        DrawPath(agent.GetPathAgent()->path, lineColor);
+        agent.Draw();
+
+        agent2.Update(GetFrameTime());
+        agent2.Draw();
+
+        agent3.Update(GetFrameTime());
+        agent3.Draw();
         EndDrawing();
 
         //if (IsMouseButtonPressed(0)) {

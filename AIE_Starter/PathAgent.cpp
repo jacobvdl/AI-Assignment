@@ -6,6 +6,8 @@ void PathAgent::Update(float dt)
 	//If path is empty return
 	if (path.empty()) return;
 
+	std::cout << "PA: PATH NOT EMPTY\n";
+
 	//Calculate the distance to the next node and the unit vector to that node'
 	glm::vec2 nodePos = path.front()->position;
 
@@ -19,6 +21,9 @@ void PathAgent::Update(float dt)
 	if (dist < 0) {
 		dist *= -1; // make the number positive
 	}
+
+	std::cout << "PA: DISTANCE IS " << dist << std::endl;
+	std::cout << "PA: SPEED IS " << speed << std::endl;
 
 	if (dist == 0 || dist < 1) {
 		position = nodePos;
@@ -75,9 +80,9 @@ void PathAgent::GoToNode(Node* node)
 	currentIndex = 0;
 }
 
-void PathAgent::Draw()
+void PathAgent::Draw(Color clr)
 {
-	DrawCircle(position.x, position.y, 15, { 0,0,255,255 });
+	DrawCircle(position.x, position.y, 15, clr);
 }
 
 void PathAgent::SetNode(Node* node)

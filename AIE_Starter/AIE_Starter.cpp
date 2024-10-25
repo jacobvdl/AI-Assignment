@@ -29,6 +29,8 @@
 #include <vector>
 #include "NodeMap.h"
 #include "PathAgent.h"
+#include "Agent.h"
+#include "GoToPointBehaviour.h"
 
 using namespace AIForGames;
 void DrawPath(std::vector<Node*> path, Color lineColor) {
@@ -78,10 +80,13 @@ int main(int argc, char* argv[])
     std::vector<Node*> nmPath = nm.AStarSearch(start, end);
     Color lineColor = { 0,255,0,255 };
 
-    PathAgent agent;
+    //PathAgent pagent;
+    //pagent.SetNode(start);
+    //pagent.SetSpeed(64);  
+    //pagent.SetNodeMap(&nm);
+
+    Agent agent(&nm, new GoToPointBehaviour());
     agent.SetNode(start);
-    agent.SetSpeed(64);  
-    agent.SetNodeMap(&nm);
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -104,19 +109,19 @@ int main(int argc, char* argv[])
         BeginDrawing();
         ClearBackground(BLACK);
         nm.Draw();
-        DrawPath(agent.path, lineColor);
+        //DrawPath(pagent.path, lineColor);
         //DrawFPS(20, 20);
-        agent.Draw();
+        //pagent.Draw();
         EndDrawing();
 
-        if (IsMouseButtonPressed(0)) {
-            Vector2 mousePos = GetMousePosition();
-            end = nm.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
-            start = agent.GetNode();
-            nmPath = nm.AStarSearch(start, end);
-            agent.GoToNode(end);
-        }
-        agent.Update(GetFrameTime());
+        //if (IsMouseButtonPressed(0)) {
+        //    Vector2 mousePos = GetMousePosition();
+        //    end = nm.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
+        //    start = pagent.GetNode();
+        //    nmPath = nm.AStarSearch(start, end);
+        //    pagent.GoToNode(end);
+        //}
+        //pagent.Update(GetFrameTime());
     }
 
     // De-Initialization

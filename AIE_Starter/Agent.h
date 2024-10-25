@@ -12,6 +12,7 @@ public:
 
 	void Update(float dt);
 	void Draw();
+	void GoTo(glm::vec2 point);
 
 private:
 	PathAgent m_pa;

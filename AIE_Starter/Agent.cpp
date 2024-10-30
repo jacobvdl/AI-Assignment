@@ -38,3 +38,13 @@ bool Agent::PathComplete()
 	return m_pa.path.empty();
 }
 
+void Agent::Reset()
+{
+	m_pa.path.clear();
+}
+
+void Agent::SetColor(Color newColor)
+{
+	m_color = newColor;
+}
+

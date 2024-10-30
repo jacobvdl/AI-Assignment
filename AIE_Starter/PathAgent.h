@@ -15,6 +15,7 @@ private:
 	NodeMap* nm;
 
 	float speed;
+	Node* startingNode;
 
 public:
 	std::vector<Node*> path;

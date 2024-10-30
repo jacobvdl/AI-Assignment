@@ -1,20 +1,47 @@
 #include "PathAgent.h"
 #include "raylib.h"
+glm::vec2 getMoveAxis(glm::vec2 pos, glm::vec2 np) {
+	
+	if (pos.x != np.x && pos.y != np.y) {
+		std::cout << "MOVING ON 2 AXIS:\n" << "PLAYERPOS: " << pos.x << ", " << pos.y << "\nNODEPOS: " << np.x << ", " << np.y << std::endl;
+		return { 0, 0 };
+	}
+		
+
+	if (pos.x != np.x) { // moving on X axis
+		if (pos.x > np.x)
+			return { -1,0 };
+		else
+			return { 1,0 };
+	}
+	else if (pos.y != np.y) {// moving on Y axis
+		if (pos.y > np.y)
+			return { 0,-1 };
+		else
+			return { 0,1 };
+	}
+}
 
 void PathAgent::Update(float dt)
 {
 	//If path is empty return
 	if (path.empty()) return;
 
-	std::cout << "PA: PATH NOT EMPTY\n";
+	if (currentIndex == 0) 
+	{
+		startingNode = path.front();
+		path.erase(path.begin());
+		
 
-	//Calculate the distance to the next node and the unit vector to that node'
+		
+	}
+
+	//std::cout << "PA: PATH NOT EMPTY\n";
+
+	//Calculate the distance to the next node and the unit vector to that node
+
+
 	glm::vec2 nodePos = path.front()->position;
-
-	//float dist = (position.x - nodePos.x) + (position.y - nodePos.y);
-	/*if (dist < 0) {
-		dist *= -1;
-	}*/
 
 	float dist = (position.x +position.y) - (nodePos.x+nodePos.y);
 
@@ -22,34 +49,37 @@ void PathAgent::Update(float dt)
 		dist *= -1; // make the number positive
 	}
 
-	std::cout << "PA: DISTANCE IS " << dist << std::endl;
-	std::cout << "PA: SPEED IS " << speed << std::endl;
+	//std::cout << "PA: DISTANCE IS " << dist << std::endl;
+	//std::cout << "PA: SPEED IS " << speed << std::endl;
 
 	if (dist == 0 || dist < 1) {
 		position = nodePos;
-		currentNode = path.front();
+		if (path.size() != 0)
+			currentNode = path.front();
 		path.erase(path.begin());
 		return;
 	}
 
-	glm::vec2 moveAxis;
-	if (position.x != nodePos.x) { // moving on X axis
-		if (position.x > nodePos.x)
-			moveAxis = { -1,0 };
-		else
-			moveAxis = { 1,0 };
-	}
-	else if (position.y != nodePos.y) {// moving on Y axis
-		if (position.y > nodePos.y)
-			moveAxis = { 0,-1 };
-		else
-			moveAxis = { 0,1 };
+	glm::vec2 moveAxis = getMoveAxis(position, nodePos);
+
+	std::cout << "MOVE AXIS: " << moveAxis.x << ", " << moveAxis.y << std::endl;
+	if (moveAxis.x == 0 && moveAxis.y == 0) {
+		//position = nodePos;
+		//if (path.size() != 0)
+			//currentNode = path.front();
+		//path.erase(path.begin());
+		
+		path.insert(path.begin(), startingNode);
+		currentIndex++;
+		return;
 	}
 
 	//Subtract speed * deltaTime from the distance(how much we’re going to move this frame)
 	dist -= speed * dt;
 
 	position += speed * dt * moveAxis;
+
+	currentIndex++;
 
 
 	//OLD CODE
@@ -77,6 +107,8 @@ void PathAgent::Update(float dt)
 void PathAgent::GoToNode(Node* node)
 {
 	path = nm->DijkstrasSearch(currentNode, node);
+	//Node* currentPos = new Node(position.x, position.y);
+	//path.insert(path.begin(), currentPos);
 	currentIndex = 0;
 }
 

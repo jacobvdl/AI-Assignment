@@ -25,6 +25,8 @@ public:
 	NodeMap* GetNodeMap() { return m_nm; }
 	glm::vec2 GetPosition() { return m_pa.GetPosition(); }
 	bool PathComplete();
+	void Reset();
+	void SetColor(Color newColor);
 
 private:
 	PathAgent m_pa;

@@ -62,7 +62,7 @@ void PathAgent::Update(float dt)
 
 	glm::vec2 moveAxis = getMoveAxis(position, nodePos);
 
-	std::cout << "MOVE AXIS: " << moveAxis.x << ", " << moveAxis.y << std::endl;
+	//std::cout << "MOVE AXIS: " << moveAxis.x << ", " << moveAxis.y << std::endl;
 	if (moveAxis.x == 0 && moveAxis.y == 0) {
 		//position = nodePos;
 		//if (path.size() != 0)

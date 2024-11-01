@@ -10,3 +10,9 @@ void FollowBehaviour::Update(Agent* agent, float dt)
 		agent->GoTo(lastTargetPosition);
 	}
 }
+
+void FollowBehaviour::Enter(Agent* agent)
+{
+	agent->SetColor({ 255,0,0,255 });
+	agent->Reset();
+}

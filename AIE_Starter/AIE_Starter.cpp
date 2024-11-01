@@ -34,6 +34,8 @@
 #include "WanderBehaviour.h"
 #include "FollowBehaviour.h"
 #include "SelectorBehaviour.h"
+#include "DistanceCondition.h"
+#include "FiniteStateMachine.h"
 
 using namespace AIForGames;
 void DrawPath(std::vector<Node*> path, Color lineColor) {
@@ -96,10 +98,27 @@ int main(int argc, char* argv[])
     //agent2.SetNode(nm.GetRandomNode());
     //agent2.SetSpeed(64);
 
-    Agent agent3(&nm, new SelectorBehaviour(new FollowBehaviour(), new WanderBehaviour()));
+    
+
+
+    DistanceCondition* closerThan3 = new DistanceCondition(3.0f * nm.GetCellSize(), true);
+    DistanceCondition* furtherThan5 = new DistanceCondition(5.0f * nm.GetCellSize(), false);
+
+    State* wanderState = new State(new WanderBehaviour());
+    State* followState = new State(new FollowBehaviour());
+    wanderState->AddTransition(closerThan3, followState);
+    followState->AddTransition(furtherThan5, wanderState);
+
+    FiniteStateMachine* fsm = new FiniteStateMachine(wanderState);
+    fsm->AddState(wanderState);
+    fsm->AddState(followState);
+    
+    
+    Agent agent3(&nm, fsm);
     agent3.SetNode(nm.GetRandomNode());
     agent3.SetSpeed(32);
     agent3.SetTarget(&agent);
+    wanderState->Enter(&agent3);
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key

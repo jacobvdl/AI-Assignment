@@ -7,6 +7,7 @@ class FollowBehaviour :
 {
 public:
     virtual void Update(Agent* agent, float dt);
+    virtual void Enter(Agent* agent);
 
 private:
     glm::vec2 lastTargetPosition;

@@ -10,3 +10,9 @@ void WanderBehaviour::Update(Agent* agent, float dt)
 	} //else 
 		//std::cout << "WANDER PATH NOT COMPLETE\n";
 }
+
+void WanderBehaviour::Enter(Agent* agent)
+{
+	agent->SetColor({ 0,255,255,255 });
+	agent->Reset();
+}

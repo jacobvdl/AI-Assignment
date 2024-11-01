@@ -10,6 +10,7 @@ public:
 	Agent();
 	Agent(NodeMap* _nm, Behaviour* _behaviour) : m_current(_behaviour), m_nm(_nm), m_color({ 255,255,0,255 }) {
 		m_pa.SetNodeMap(_nm);
+		m_current->Enter(this);
 	}
 	~Agent() { delete m_current; }
 

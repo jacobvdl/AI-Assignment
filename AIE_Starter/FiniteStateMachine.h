@@ -12,10 +12,13 @@ private:
 	State* newState;
 
 public:
-	FiniteStateMachine(State* s) : currentState(s), newState(nullptr) {}
+	FiniteStateMachine(State* s) : currentState(s), newState(nullptr) {
+		states.push_back(currentState);
+	}
 	virtual ~FiniteStateMachine();
 
 	void Update(Agent* agent, float dt);
+	void AddState(State* state) { states.push_back(state); }
 
 
 };

@@ -6,5 +6,6 @@ class WanderBehaviour :
 {
 public:
     virtual void Update(Agent* agent, float dt);
+    virtual void Enter(Agent* agent);
 };
 

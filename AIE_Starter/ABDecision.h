@@ -8,6 +8,7 @@ class ABDecision :
     Condition* currentCondition;
 
 public:
+    ABDecision(Decision* _decA, Decision* _decB);
     void setCondition(Condition* newcondition) { currentCondition = newcondition; }
     Condition* getCondition() { return currentCondition; }
     void setDecisions(Decision* _decA, Decision* _decB);

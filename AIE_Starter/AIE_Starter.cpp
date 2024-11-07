@@ -68,14 +68,18 @@ int main(int argc, char* argv[])
     b->position = glm::vec2(250.0f, 75.0f);*/
 
     std::vector<std::string> asciiMap;
-    asciiMap.push_back("000000000000");
-    asciiMap.push_back("010111011100");
-    asciiMap.push_back("011101110110");
-    asciiMap.push_back("010100000010");
-    asciiMap.push_back("010111111110");
-    asciiMap.push_back("010000001000");
-    asciiMap.push_back("011111111110");
-    asciiMap.push_back("000000000000");
+    asciiMap.push_back("00000000000000000");
+    asciiMap.push_back("01011101110001100");
+    asciiMap.push_back("01110111011000100");
+    asciiMap.push_back("01010000001011110");
+    asciiMap.push_back("01011111111010010");
+    asciiMap.push_back("01000000100011110");
+    asciiMap.push_back("01111111111110010");
+    asciiMap.push_back("01000000010000010");
+    asciiMap.push_back("01000111111111110");
+    asciiMap.push_back("01000100000000010");
+    asciiMap.push_back("01111111111111110");
+    asciiMap.push_back("00000000000000000");
 
     NodeMap nm;
     nm.Initialise(asciiMap, 32);

@@ -57,9 +57,6 @@
     <ClCompile Include="DistanceCondition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WanderDecision.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -102,9 +99,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DistanceCondition.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WanderDecision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

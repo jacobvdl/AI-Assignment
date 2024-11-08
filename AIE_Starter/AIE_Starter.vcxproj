@@ -153,7 +153,6 @@
     <ClCompile Include="SelectorBehaviour.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="WanderBehaviour.cpp" />
-    <ClCompile Include="WanderDecision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -172,7 +171,6 @@
     <ClInclude Include="SelectorBehaviour.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="WanderBehaviour.h" />
-    <ClInclude Include="WanderDecision.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

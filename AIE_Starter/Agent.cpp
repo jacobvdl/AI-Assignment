@@ -1,7 +1,9 @@
 #include "Agent.h"
 
+
 void Agent::Update(float dt)
 {
+
 	if (m_current)
 		m_current->Update(this, dt);
 	m_pa.Update(dt);

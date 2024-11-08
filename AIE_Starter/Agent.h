@@ -4,6 +4,7 @@
 #include "PathAgent.h"
 #include <raylib.h>
 #include <glm/glm.hpp>
+//#include "Decision.h"
 class Agent
 {
 public:
@@ -35,5 +36,6 @@ private:
 	NodeMap* m_nm;
 	Color m_color;
 	Agent* m_target;
+	Decision* m_decisionTree;
 };
 

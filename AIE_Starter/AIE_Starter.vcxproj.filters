@@ -57,6 +57,15 @@
     <ClCompile Include="DistanceCondition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Decision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ABDecision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionDecision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -99,6 +108,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DistanceCondition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Decision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ABDecision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionDecision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

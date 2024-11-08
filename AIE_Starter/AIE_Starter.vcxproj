@@ -139,12 +139,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ABDecision.cpp" />
     <ClCompile Include="Agent.cpp" />
     <ClCompile Include="AIE_Starter.cpp" />
     <ClCompile Include="Behaviour.cpp" />
     <ClCompile Include="Condition.cpp" />
-    <ClCompile Include="Decision.cpp" />
     <ClCompile Include="DistanceCondition.cpp" />
     <ClCompile Include="FiniteStateMachine.cpp" />
     <ClCompile Include="FollowBehaviour.cpp" />
@@ -161,11 +159,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ABDecision.h" />
     <ClInclude Include="Agent.h" />
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="Condition.h" />
-    <ClInclude Include="Decision.h" />
     <ClInclude Include="DistanceCondition.h" />
     <ClInclude Include="FiniteStateMachine.h" />
     <ClInclude Include="FollowBehaviour.h" />

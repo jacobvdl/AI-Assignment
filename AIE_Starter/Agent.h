@@ -5,6 +5,9 @@
 #include <raylib.h>
 #include <glm/glm.hpp>
 //#include "Decision.h"
+
+class Decision;
+
 class Agent
 {
 public:
@@ -29,6 +32,9 @@ public:
 	bool PathComplete();
 	void Reset();
 	void SetColor(Color newColor);
+	void SetBehaviour(Behaviour* newBehaviour);
+	Behaviour* GetBehaviour() { return m_current; }
+	void SetDecision(Decision* newDec);
 
 private:
 	PathAgent m_pa;

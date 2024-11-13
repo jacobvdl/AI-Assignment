@@ -3,6 +3,6 @@
 class Decision
 {
 public:
-	virtual bool makeDecision(Agent* a, float dt) {}
+	virtual bool makeDecision(Agent* a, float dt) { return false; }
 };
 

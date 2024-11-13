@@ -36,6 +36,8 @@
 #include "SelectorBehaviour.h"
 #include "DistanceCondition.h"
 #include "FiniteStateMachine.h"
+#include "ABDecision.h"
+#include "ActionDecision.h"
 
 using namespace AIForGames;
 void DrawPath(std::vector<Node*> path, Color lineColor) {
@@ -106,23 +108,40 @@ int main(int argc, char* argv[])
 
 
     DistanceCondition* closerThan3 = new DistanceCondition(3.0f * nm.GetCellSize(), true);
-    DistanceCondition* furtherThan5 = new DistanceCondition(5.0f * nm.GetCellSize(), false);
+    DistanceCondition* closerThan5 = new DistanceCondition(5.0f * nm.GetCellSize(), true);
 
-    State* wanderState = new State(new WanderBehaviour());
+    /*State* wanderState = new State(new WanderBehaviour());
     State* followState = new State(new FollowBehaviour());
     wanderState->AddTransition(closerThan3, followState);
-    followState->AddTransition(furtherThan5, wanderState);
+    followState->AddTransition(closerThan5, wanderState);
 
     FiniteStateMachine* fsm = new FiniteStateMachine(wanderState);
     fsm->AddState(wanderState);
-    fsm->AddState(followState);
+    fsm->AddState(followState);*/
     
     
-    Agent agent3(&nm, fsm);
+    //Agent agent3(&nm, fsm);
+    //agent3.SetNode(nm.GetRandomNode());
+    //agent3.SetSpeed(32);
+    //agent3.SetTarget(&agent);
+    //wanderState->Enter(&agent3);
+    
+
+
+    ActionDecision followDec(new FollowBehaviour());
+    ActionDecision wanderDec(new WanderBehaviour());
+
+    
+    ABDecision isWithin5(closerThan5, &followDec, &wanderDec);
+    ABDecision isWithin3(closerThan3, &followDec, &isWithin5);
+
+
+    Agent agent3(&nm, new WanderBehaviour());
     agent3.SetNode(nm.GetRandomNode());
     agent3.SetSpeed(32);
     agent3.SetTarget(&agent);
-    wanderState->Enter(&agent3);
+    agent3.SetDecision(&isWithin3);
+    
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key

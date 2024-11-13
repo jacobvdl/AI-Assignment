@@ -2,5 +2,6 @@
 
 bool ActionDecision::makeDecision(Agent* a, float dt)
 {
-    return false;
+    a->SetBehaviour(action);
+    return true;
 }

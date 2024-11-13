@@ -38,6 +38,7 @@
 #include "FiniteStateMachine.h"
 #include "ABDecision.h"
 #include "ActionDecision.h"
+#include "BehaviourCondition.h"
 
 using namespace AIForGames;
 void DrawPath(std::vector<Node*> path, Color lineColor) {
@@ -104,11 +105,15 @@ int main(int argc, char* argv[])
     //agent2.SetNode(nm.GetRandomNode());
     //agent2.SetSpeed(64);
 
-    
+    FollowBehaviour* followB = new FollowBehaviour();
+
+    ActionDecision followDec(followB);
+    ActionDecision wanderDec(new WanderBehaviour());
 
 
     DistanceCondition* closerThan3 = new DistanceCondition(3.0f * nm.GetCellSize(), true);
     DistanceCondition* closerThan5 = new DistanceCondition(5.0f * nm.GetCellSize(), true);
+    BehaviourCondition* isFollowing = new BehaviourCondition(followB);
 
     /*State* wanderState = new State(new WanderBehaviour());
     State* followState = new State(new FollowBehaviour());
@@ -128,12 +133,12 @@ int main(int argc, char* argv[])
     
 
 
-    ActionDecision followDec(new FollowBehaviour());
-    ActionDecision wanderDec(new WanderBehaviour());
+    
 
     
     ABDecision isWithin5(closerThan5, &followDec, &wanderDec);
-    ABDecision isWithin3(closerThan3, &followDec, &isWithin5);
+    ABDecision isFollow(isFollowing, &isWithin5, &wanderDec);
+    ABDecision isWithin3(closerThan3, &followDec, &isFollow);
 
 
     Agent agent3(&nm, new WanderBehaviour());

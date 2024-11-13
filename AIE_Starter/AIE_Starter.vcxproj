@@ -144,6 +144,7 @@
     <ClCompile Include="Agent.cpp" />
     <ClCompile Include="AIE_Starter.cpp" />
     <ClCompile Include="Behaviour.cpp" />
+    <ClCompile Include="BehaviourCondition.cpp" />
     <ClCompile Include="Condition.cpp" />
     <ClCompile Include="Decision.cpp" />
     <ClCompile Include="DistanceCondition.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="ActionDecision.h" />
     <ClInclude Include="Agent.h" />
     <ClInclude Include="Behaviour.h" />
+    <ClInclude Include="BehaviourCondition.h" />
     <ClInclude Include="Condition.h" />
     <ClInclude Include="Decision.h" />
     <ClInclude Include="DistanceCondition.h" />
